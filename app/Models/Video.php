@@ -6,17 +6,14 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Video extends Model
 {
-    use HasUuids;
     use HasFactory;
+    use HasUuids;
     protected $fillable = [
-        'user_id',
-        'category_id',
-        'language_id',
+        'course_id',
         'title',
-        'description',
-        'banner',
         'slug',
+        'url',
     ];
 }

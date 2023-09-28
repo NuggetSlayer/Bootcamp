@@ -20,5 +20,13 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
-    Route::match(['get','post'], '/form', [InstructorController::class, 'store'])->name('form');
+    Route::match(['get','post'], '/course-form', [InstructorController::class, 'store'])->name('course-form');
+    Route::match(['get','put'], '/edit-course-form/{slug}', [InstructorController::class, 'edit'])->name('edit-course-form');
+    Route::get('/delete-course/{slug}', [InstructorController::class, 'destroy'])->name('delete-course');
+    Route::get('/course/{slug}', [InstructorController::class, 'course'])->name('course');
+    // Videos
+    Route::match(['get','post'], '/video-form/{id}', [InstructorController::class, 'store_vid'])->name('video-form');
+    Route::get('/course/video/{slug}', [InstructorController::class, 'video'])->name('video');
+
+
 });

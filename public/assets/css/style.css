@@ -221,6 +221,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-weight: bold;
   color: var(--headingColor);
   font-family: var(--headingFont);
   -webkit-transition: all 0.3s ease-out 0s;
@@ -475,14 +476,38 @@ li {
 }
 
 .default__button {
-  padding: 10px 25px;
+  padding: 10px 20px;
   background-color: var(--primaryColor);
   color: var(--whiteColor);
-  display: inline-block;
+  display: flex;
+  align-items: center;
   text-align: center;
   border-radius: var(--borderRadius);
   font-size: 15px;
   border: 1px solid var(--primaryColor);
+}
+.edit__button{
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  background: var(--greencolor2);
+  border: 1px solid var(--greencolor2);
+  margin-left: 10px;
+}
+.delete__button{
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  background: var(--secondaryColor2);
+  border: 1px solid var(--secondaryColor2);
+
+}
+.course__details__heading .row .col-xl-3{
+  padding: 0 5px !important;
+}
+.default__button svg {
+  width: 15px;
+  height: 15px;
 }
 .default__button:hover {
   background-color: var(--whiteColor);
@@ -2786,7 +2811,7 @@ Hero Banner Area
     padding: 0 30px;
   }
 }
-.herobannerarea__clms .gridarea__wraper.gridarea__wraper__2 .gridarea__content .gridarea__heading h3 {
+.herobannerarea__clms .gridarea__wraper.gridarea__wraper__2 .gridarea__content .gridarea__heading h4 {
   font-size: 24px;
   line-height: 1;
 }
@@ -4695,7 +4720,7 @@ Grid Area
   box-shadow: 0 0 20px 10px rgba(95, 45, 237, 0.05);
   margin-bottom: 30px;
 }
-.gridarea__wraper.gridarea__wraper__2 .gridarea__content .gridarea__heading h3 {
+.gridarea__wraper.gridarea__wraper__2 .gridarea__content .gridarea__heading h4 {
   font-size: 18px;
   line-height: 25px;
 }
@@ -4721,7 +4746,7 @@ Grid Area
   top: 3px;
   left: 8px;
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge {
+.grid__badge {
   background: var(--secondaryColor);
   color: var(--whiteColor);
   border-radius: 3px;
@@ -4732,19 +4757,22 @@ Grid Area
   padding: 5px 15px;
   line-height: 1;
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge.blue__color {
+ .grid__badge.blue__color {
   background: var(--blue);
+  color: white;
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge.pink__color {
+ .grid__badge.pink__color {
   background: var(--secondaryColor2);
+  color: white;
+
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge.green__color {
+ .grid__badge.green__color {
   background: var(--greencolor2);
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge.orange__color {
+ .grid__badge.orange__color {
   background: var(--orange);
 }
-.gridarea__wraper .gridarea__img .gridarea__small__button .grid__badge.yellow__color {
+ .grid__badge.yellow__color {
   background: var(--yellow);
 }
 .gridarea__wraper .gridarea__img .gridarea__small__icon {
@@ -4766,11 +4794,11 @@ Grid Area
 .gridarea__wraper .gridarea__img .gridarea__small__icon i:hover {
   background: var(--primaryColor);
 }
-.gridarea__wraper .gridarea__content .gridarea__list {
-  margin-bottom: 15px;
-}
 .gridarea__wraper .gridarea__content .gridarea__list ul {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 @media (max-width: 767px) {
   .gridarea__wraper .gridarea__content .gridarea__list ul {
@@ -4779,7 +4807,6 @@ Grid Area
 }
 .gridarea__wraper .gridarea__content .gridarea__list ul li {
   font-size: 14px;
-  width: 50%;
   color: var(--blackColor);
 }
 @media (max-width: 767px) {
@@ -4793,9 +4820,8 @@ Grid Area
   margin-right: 5px;
 }
 .gridarea__wraper .gridarea__content .gridarea__heading h3 {
-  margin-bottom: 10px;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 27px;
 }
 .gridarea__wraper .gridarea__content .gridarea__heading h3 a {
@@ -4804,11 +4830,10 @@ Grid Area
 .gridarea__wraper .gridarea__content .gridarea__heading h3 a:hover {
   color: var(--primaryColor);
 }
-.gridarea__wraper .gridarea__content .gridarea__price {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--primaryColor);
-  margin-bottom: 20px;
+.gridarea__wraper .gridarea__content .gridarea__price p{
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 10px;
 }
 .gridarea__wraper .gridarea__content .gridarea__price.green__color {
   color: var(--lightGrey4);
@@ -4830,9 +4855,6 @@ Grid Area
 }
 .gridarea__wraper .gridarea__content .gridarea__bottom {
   border-top: 1px solid var(--lightGrey5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding-top: 15px;
 }
 @media (max-width: 767px) {
@@ -5075,7 +5097,7 @@ Grid Area
 }
 .gridarea__wraper.gridarea__course__list .gridarea__content .gridarea__price {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 10px;
   line-height: 22px;
   color: rgba(114, 106, 137, 0.8);
 }
@@ -7683,8 +7705,8 @@ Blog
 }
 
 .sidebar__title {
-  font-weight: 700;
-  font-size: 22px;
+  font-weight: bold;
+  font-size: 30px;
   line-height: 30px;
   position: relative;
   padding-left: 8px;
@@ -7693,8 +7715,8 @@ Blog
 .sidebar__title::before {
   position: absolute;
   content: "";
-  width: 2px;
-  height: 21px;
+  width: 4px;
+  height: 27px;
   background: var(--primaryColor);
   left: 0;
   bottom: 5px;
@@ -8639,7 +8661,7 @@ Course
 }
 .course__details__paragraph p {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 30px;
 }
 @media (max-width: 767px) {
@@ -8649,14 +8671,15 @@ Course
 }
 
 .course__details__wraper {
-  background: var(--darkdeep3);
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 30px;
+  background: var(--darkdeep3);
+  border-left: 2px solid #312a57  !important;
+  padding: 5px;
 }
 .course__details__wraper ul {
   width: 50%;
-  border-right: 2px solid var(--borderColor);
   padding: 55px 70px 55px 50px;
 }
 @media (min-width: 992px) and (max-width: 1365px) {
@@ -8692,7 +8715,7 @@ Course
   }
 }
 .course__details__tab__wrapper {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .content__cirriculum__wrap .accordion-button {
@@ -8729,6 +8752,7 @@ Course
 .scc__info {
   display: flex;
   align-items: center;
+  color: white;
 }
 
 .scc__info h5 {
@@ -8742,7 +8766,7 @@ Course
   font-size: 16px;
 }
 
-.scc__info h5 span {
+.scc__info h5 {
   font-weight: 500;
 }
 
@@ -8754,16 +8778,21 @@ Course
   padding: 0 10px;
   border-radius: var(--borderRadius);
   background: var(--primaryColor);
-  margin-left: 20px;
+  margin-left: 7px;
 }
 
 .scc__meta {
   font-size: 14px;
+  display: flex; 
 }
-
+.accordion-item .font-bold h3{
+  font-weight: bold;
+}
 .content__cirriculum__wrap .accordion-item {
   margin-bottom: 25px;
   border: 1px solid var(--borderColor);
+  background: var(--whiteColor);
+
 }
 
 .course__tap__wrap {
@@ -9102,6 +9131,9 @@ Course
   position: relative;
 }
 
+.lesson__content__wrap h3 {
+  font-weight: bold;
+}
 .lesson__content__wrap {
   position: absolute;
   z-index: 999;
@@ -9111,16 +9143,22 @@ Course
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  margin-bottom: 10px;
 }
+
 @media (min-width: 320px) and (max-width: 575px) {
   .lesson__content__wrap {
     top: 5px 100px;
   }
 }
+.lesson__content__wrap span a{
+  color: white;
+}
 .lesson__content__wrap h3 {
   color: var(--whiteColor);
   font-size: 22px;
   margin: 0;
+  color: white;
 }
 @media (min-width: 320px) and (max-width: 575px) {
   .lesson__content__wrap h3 {
@@ -10192,6 +10230,7 @@ Breadcrumb Area
   color: var(--blackColor);
 }
 @media (max-width: 767px) {
+  
   .faqarea__wrapper .accordion-item .accordion-header button {
     font-size: 18px;
     padding: 14px 10px 15px;
@@ -10921,6 +10960,7 @@ th{
 }
 .dashboard__section__title h4 {
   font-size: 25px;
+  font-weight: bold;
   margin: 0;
 }
 .dashboard__single__counter {
@@ -11199,25 +11239,43 @@ th{
 
 .dashboard__form__input label {
   display: block;
-  font-size: 14px;
+  font-size: 18px;
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: bold;
   text-transform: capitalize;
   color: var(--blackColor);
 }
 .dashboard__form__input label svg {
   width: 14px;
 }
+.dashboard__form__input img {
+  width: 35%;
+}
 .dashboard__form__input input {
   width: 100%;
   background-color: transparent;
   border: 2px solid var(--borderColor);
-  border-radius: 6px;
+  border-radius: 8px;
   line-height: 23px;
-  padding: 10px 20px;
+  padding: 7px;
   font-size: 14px;
   color: var(--contentColor);
 }
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: var(--primaryColor);
+  padding: 10px 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
+
 .dashboard__form__input textarea {
   width: 100%;
   background-color: transparent;
@@ -12593,9 +12651,6 @@ Dark Mode
 }
 .is_dark .course__tap__wrap li:hover button {
   color: var(--blackColor);
-}
-.is_dark .content__cirriculum__wrap .accordion-body {
-  background: var(--whiteColor);
 }
 .is_dark .scc__info i {
   color: var(--blackColor);
