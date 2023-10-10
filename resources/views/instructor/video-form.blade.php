@@ -1,4 +1,4 @@
-@extends('layouts.instructor')
+@extends('layouts.main')
 
 
 @section('sidebar')
@@ -9,7 +9,7 @@
         <div class="dashboard__nav">
             <ul>
                 <li>
-                    <a href="{{ route('instructor') }}">
+                    <a href="{{ route('dashboard') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-monitor">
@@ -94,7 +94,7 @@
 @section('content')
     <div class="col-xl-9 col-lg-9 col-md-12">
         <form action="" method="post">
-            @if (Route::is('edit-course-form'))
+            @if (Route::is('edit-video-form'))
                 @method('PUT')
             @endif
 
@@ -112,7 +112,7 @@
                                             <label for="title">Video Title </label>
                                             <input type="text" class="@error('title') is-invalid @enderror"
                                                 placeholder="Video Title" name="title"
-                                                value="{{ Route::is('edit-course-form') ? old('title') ?? $course->title : old('title') }}">
+                                                value="{{ Route::is('edit-video-form') ? old('title') ?? $video->title : old('title') }}">
                                             @error('title')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
@@ -126,7 +126,7 @@
                                             <label for="url">Video URL</label>
                                             <input type="text" class="@error('url') is-invalid @enderror"
                                                 placeholder="Video URL" name="url"
-                                                value="{{ Route::is('edit-course-form') ? old('url') ?? $course->url : old('url') }}">
+                                                value="{{ Route::is('edit-video-form') ? old('url') ?? $video->url : old('url') }}">
                                             @error('url')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
@@ -136,8 +136,8 @@
 
                                 <div class="col-xl-4 col-lg-8 col-md-6 col-12">
                                     <div class="create__course__bottom__button">
-                                        @if (Route::is('edit-course-form'))
-                                            <button type="submit" href="#">Update Course</button>
+                                        @if (Route::is('edit-video-form'))
+                                            <button type="submit" href="#">Update Video</button>
                                         @else
                                             <button type="submit" href="#">Add Video</button>
                                         @endif

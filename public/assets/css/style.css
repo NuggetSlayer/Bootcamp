@@ -479,12 +479,15 @@ li {
   padding: 10px 20px;
   background-color: var(--primaryColor);
   color: var(--whiteColor);
-  display: flex;
-  align-items: center;
+  display: inline-block;
+  /* align-items: center; */
   text-align: center;
   border-radius: var(--borderRadius);
   font-size: 15px;
   border: 1px solid var(--primaryColor);
+}
+.be__instructor{
+  width: 170px;
 }
 .edit__button{
   padding: 10px 10px;
@@ -493,6 +496,10 @@ li {
   background: var(--greencolor2);
   border: 1px solid var(--greencolor2);
   margin-left: 10px;
+}
+.profile__img{
+  width: 80px;
+  aspect-ratio: 1/1;
 }
 .delete__button{
   padding: 10px 10px;
@@ -1403,6 +1410,7 @@ Header Area
 }
 .headerarea__2 .row {
   align-items: center;
+  justify-content: space-around;
 }
 .headerarea__2__inner {
   display: flex;
@@ -8780,11 +8788,51 @@ Course
   background: var(--primaryColor);
   margin-left: 7px;
 }
-
-.scc__meta {
-  font-size: 14px;
-  display: flex; 
+.scc__peta{
+  display: flex;
 }
+.scc__peta svg{
+  color: white;
+}
+.scc__meta {
+  font-size: 10px;
+  display: flex; 
+  gap: 8px;
+  color: white;
+}
+.scc__meta h1{
+  font-size: 15px;
+  margin: 0;
+}
+/* .scc__meta a:nth-child(1){
+  background-color: var(--deepred);
+  padding: 8px;
+  border-radius: 2px;
+  border: 1px solid var(--deepred);
+}
+.scc__meta a:nth-child(2){
+  background-color: var(--greencolor3);
+  padding: 8px;
+  border-radius: 2px;
+  border: 1px solid var(--greencolor3);
+}
+.scc__meta a:nth-child(3){
+  background-color: var(--primaryColor);
+  padding: 8px;
+  border-radius: 2px;
+  border: 1px solid var(--primaryColor);
+} */
+/* .scc__meta a:hover{
+  background-color: var(--whiteColor);
+  color: white !important;
+  border: 1px solid var(--primaryColor);
+} */
+.scc__meta a svg{
+  font-size: 5px;
+  width: 18px;
+  height: 18px;
+}
+
 .accordion-item .font-bold h3{
   font-weight: bold;
 }
@@ -9525,7 +9573,7 @@ Error
 .loginarea__wraper form .login__button {
   margin-top: 25px;
 }
-.loginarea__wraper form .login__button a {
+.loginarea__wraper form .login__button button {
   width: 100%;
 }
 .loginarea__wraper .login__social__option {
@@ -10839,7 +10887,7 @@ Breadcrumb Area
   margin: 0;
   margin-bottom: 0;
   line-height: 1.24;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .dashboardarea__left__content h4 {
@@ -10977,7 +11025,7 @@ th{
 }
 .dashboard__table table {
   width: 100%;
-  text-align: center;
+  text-align: center !important;
 }
 .dashboard__table table thead {
   background: var(--lightGrey5);
@@ -10991,9 +11039,9 @@ th{
   letter-spacing: 0.8px;
 }
 .dashboard__table table tbody tr td a{
-  border: 1px solid white;
+  border: 1.5px solid white;
   padding: 5px;
-  border-radius: 1rem;
+  border-radius: .7rem;
 }
 .dashboard__table table tbody tr td a:hover{
  border-color: var(--primaryColor);
@@ -11011,6 +11059,9 @@ th{
 }
 .dashboard__table table tbody tr {
   width: 100%;
+  text-align:center;
+  vertical-align: middle !important;
+
 }
 .dashboard__table table tbody tr th {
   font-weight: 400;
@@ -11939,19 +11990,6 @@ input[type=file]::file-selector-button:hover {
   }
 }
 
-.dashboard__label {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  font-size: 10px;
-  line-height: 14px;
-  font-weight: 500;
-  display: inline-block;
-  color: var(--whiteColor);
-  padding: 0px 9px;
-  border-radius: 15px;
-  background-color: var(--primaryColor);
-}
 
 .grid__course__status {
   padding-top: 20px;
@@ -12655,9 +12693,7 @@ Dark Mode
 .is_dark .scc__info i {
   color: var(--blackColor);
 }
-.is_dark .scc__meta {
-  color: var(--blackColor);
-}
+
 .is_dark .scc__wrap .question {
   color: var(--blackColor);
 }

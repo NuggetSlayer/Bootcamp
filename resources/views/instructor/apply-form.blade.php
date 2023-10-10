@@ -90,12 +90,10 @@
     </div>
 @endsection
 
+
 @section('content')
     <div class="col-xl-9 col-lg-9 col-md-12">
         <form action="" method="post" enctype="multipart/form-data">
-            @if (Route::is('edit-course-form'))
-                @method('PUT')
-            @endif
             @csrf
             <div class="accordion-item">
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -107,91 +105,24 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="title">Course Title </label>
-                                            <input type="text" class="@error('title') is-invalid @enderror"
-                                                placeholder="Course Title" name="title"
-                                                value="{{ Route::is('edit-course-form') ? old('title') ?? $course->title : old('title') }}">
-                                            @error('title')
+                                            <label for="name">Full Name </label>
+                                            <input type="text" class="@error('name') is-invalid @enderror"
+                                                placeholder="Name" name="name" value="{{ old('name') }}">
+                                            @error('name')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row mb-5">
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                        <div class="dashboard__form__input">
-                                            <label for="category">Select Category</label>
-                                        </div>
-                                        <div class="dashboard__selector">
-                                            <select class="form-select @error('category') is-invalid @enderror"
-                                                name="category" aria-label="Default select example">
-                                                <option value="">Select</option>
-                                                @foreach ($category as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if (Route::is('edit-course-form')) {{ old('category', $course->category_id) == $item->id ? 'selected' : '' }}
-                                                        @else
-                                                        {{ old('category') == $item->id ? 'selected' : '' }} @endif>
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('category')
-                                                <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                        <div class="dashboard__form__input">
-                                            <label for="language">Select Language</label>
-                                        </div>
-                                        <div class="dashboard__selector">
-                                            <select class="form-select @error('language') is-invalid @enderror"
-                                                name="language" aria-label="Default select example">
-                                                <option value="">Select</option>
-                                                @foreach ($language as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if (Route::is('edit-course-form')) {{ old('language', $course->language_id) == $item->id ? 'selected' : '' }}
-                                                        @else
-                                                        {{ old('language') == $item->id ? 'selected' : '' }} @endif>
-                                                        {{ $item->name }} </option>
-                                                @endforeach
-                                            </select>
-                                            @error('language')
-                                                <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                </div>
-                                {{-- 
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
-                                    <div class="dashboard__form__wraper">
-                                        <div class="dashboard__form__input">
-                                            <label for="title">Course Title </label>
-                                            <input class="@error('title') is-invalid @enderror some_class_name"
-                                                placeholder="Course Title" name="tags"
-                                                value='css, html, javascript, css' data-blacklist='.NET,PHP'>
-                                            @error('title')
-                                                <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- 
-                                <input name='tags' class='some_class_name' placeholder='write some tags'
-                                    value='css, html, javascript, css' data-blacklist='.NET,PHP'> --}}
 
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="title">Course Title </label>
-                                            <input type="text" class="@error('title') is-invalid @enderror"
-                                                placeholder="Course Title" name="title"
-                                                value="{{ Route::is('edit-course-form') ? old('title') ?? $course->title : old('title') }}">
-                                            @error('title')
+                                            <label for="expertise">Expertise </label>
+                                            <input type="text" class="@error('expertise') is-invalid @enderror"
+                                                placeholder="expertise" name="expertise" value="{{ old('expertise') }}">
+                                            @error('expertise')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -201,12 +132,10 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="banner">Course Banner</label>
-                                            <img class="rounded-lg mb-2 {{ Route::is('edit-course-form') ? '' : 'hidden' }}"
-                                                src="{{ Route::is('edit-course-form') ? asset('storage/' . $course->banner) : '' }}">
-                                            <input type="file" class="@error('banner') is-invalid @enderror"
-                                                placeholder="Course Banner" name="banner">
-                                            @error('banner')
+                                            <label for="profile">Profile Image</label>
+                                            <input type="file" class="@error('profile') is-invalid @enderror"
+                                                name="profile">
+                                            @error('profile')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -216,10 +145,10 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-2">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="description">About Course</label>
-                                            <textarea id="" cols="30" rows="10" class="@error('description') is-invalid @enderror"
-                                                name="description">{{ Route::is('edit-course-form') ? old('description') ?? $course->description : old('description') }}</textarea>
-                                            @error('description')
+                                            <label for="biography">Biography</label>
+                                            <textarea id="" cols="30" rows="10" class="@error('biography') is-invalid @enderror"
+                                                name="biography">{{ old('biography') }}</textarea>
+                                            @error('biography')
                                                 <small
                                                     class="invalid-feedback mt-2 mb-2 ms-1 block">{{ $message }}</small>
                                             @enderror
@@ -229,11 +158,7 @@
 
                                 <div class="col-xl-4 col-lg-8 col-md-6 col-12">
                                     <div class="create__course__bottom__button">
-                                        @if (Route::is('edit-course-form'))
-                                            <button type="submit" href="#">Update Course</button>
-                                        @else
-                                            <button type="submit" href="#">Create Course</button>
-                                        @endif
+                                        <button type="submit" href="#">Send</button>
                                     </div>
                                 </div>
 

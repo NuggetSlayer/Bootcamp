@@ -1,4 +1,4 @@
-@extends('layouts.instructor')
+@extends('layouts.main')
 
 @section('header')
     <div class="row">
@@ -8,8 +8,16 @@
                     <div class="dashboardarea__inner">
                         <div class="dashboardarea__left">
                             <div class="dashboardarea__left__img">
-                                <img src="{{ asset('assets/img/dashbord/dashbord__2.jpg') }}" alt="">
+                                <div x-data="{ photoName: null, photoPreview: null }" class="col-span-6 sm:col-span-4" bis_skin_checked="1">
+                                    
+                                    <div class="mt-2" x-show="! photoPreview" bis_skin_checked="1">
+                                        <img src="https://ui-avatars.com/api/?name=A&amp;color=7F9CF5&amp;background=EBF4FF"
+                                            alt="Abii" class="object-cover">
+                                    </div>
+
+                                </div>
                             </div>
+
                             <div class="dashboardarea__left__content font-semibold">
                                 <h1>Welcome, {{ Auth::user()->name }}</h1>
                             </div>
@@ -17,21 +25,22 @@
                         <div class="dashboardarea__star">
 
                         </div>
-                        <div class="dashboardarea__right">
-                            <div class="dashboardarea__right__button">
-                                <a class="default__button flex align-middle gap-1" href="{{ route('course-form') }}">Create
-                                    a New
-                                    Course
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </a>
+                        @can('isInstructor')
+                            <div class="dashboardarea__right">
+                                <div class="dashboardarea__right__button">
+                                    <a class="default__button flex align-middle gap-1" href="{{ route('course-form') }}">Create
+                                        a New
+                                        Course
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -47,7 +56,7 @@
         <div class="dashboard__nav">
             <ul>
                 <li>
-                    <a href="{{ route('instructor') }}">
+                    <a href="{{ route('dashboard') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-monitor">
@@ -59,14 +68,13 @@
                         My Courses</a>
                 </li>
                 <li>
-                    <a href="instructor-announcments.html">
+                    <a href="student-enrolled-courses.html">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-volume-1">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            stroke-linejoin="round" class="feather feather-bookmark">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        Announcments</a>
+                        Enrolled Courses</a>
                 </li>
                 <li>
                     <a href="instructor-quiz-attempts.html">
@@ -217,7 +225,7 @@
                                         <div class="gridarea__content">
                                             <div class="gridarea__heading">
                                                 <h3><a
-                                                        href="{{ route('course', ['slug' => $item->slug]) }}">{{ $item->title }}</a>
+                                                        href="{{ route('course', ['slug' => $item->slug]) }}">{!! Str::limit(strip_tags($item->title), $limit = 40, $end = '...') !!}</a>
                                                 </h3>
                                             </div>
                                             <div class="gridarea__price">
@@ -241,6 +249,28 @@
                                     </div>
                                 </div>
                             @empty
+                                @if (auth()->user() &&
+                                        !auth()->user()->isInstructor())
+                                    <div class="dashboardarea__right">
+                                        <div class="dashboardarea__right__button be__instructor mx-auto">
+                                            <a class="default__button flex align-middle gap-1"
+                                                href="{{ route('apply-form', ['id' => Auth::id()]) }}">Be An Instructor
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-arrow-right">
+                                                    <line x1="5" y1="12" x2="19" y2="12">
+                                                    </line>
+                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="no-data text-center">
+                                        Course Empty
+                                    </div>
+                                @endif
                             @endforelse
                         </div>
                     </div>

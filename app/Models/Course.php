@@ -19,4 +19,18 @@ class Course extends Model
         'banner',
         'slug',
     ];
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+
+    public function delete()
+    {
+        // Delete associated lessons
+        $this->videos()->delete();
+
+        return parent::delete();
+    }
 }
