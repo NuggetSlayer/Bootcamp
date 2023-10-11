@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\Category;
 use App\Models\Course;
-use App\Models\Language;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+
 
 
 
@@ -20,10 +20,8 @@ class InstructorController extends Controller
     public function my_courses()
     {
         $course  = Course::join('users', 'courses.user_id', '=', 'users.id')
-            ->join('categories', 'courses.category_id', '=', 'categories.id')
-            ->join('languages', 'courses.language_id', '=', 'languages.id')
+            ->with('category')
             ->where('courses.user_id', Auth::id())
-            ->select('courses.title', 'courses.description', 'categories.name', 'languages.name AS language_name', 'courses.banner', 'courses.slug')
             ->get();
         return view('instructor.my-courses', compact('course'));
     }
@@ -43,7 +41,7 @@ class InstructorController extends Controller
             Course::create([
                 'user_id' => Auth::id(),
                 'category_id' => $request->category,
-                'language_id' => $request->language,
+                'language' => $request->language,
                 'title' => $request->title,
                 'description' => $request->description,
                 'banner' => $request->file('banner')->store('image', 'public'),
@@ -55,9 +53,20 @@ class InstructorController extends Controller
             return redirect()->route('dashboard');
         } else {
             $category  = Category::all();
-            $language  = Language::all();
-            return view('instructor.course-form', compact('category', 'language'));
+            return view('instructor.course-form', compact('category'));
         }
+    }
+
+
+    public function course($slug)
+    {
+        $course = Course::join('users', 'courses.user_id', '=', 'users.id')
+            ->join('categories', 'courses.category_id', '=', 'categories.id')
+            ->where('courses.slug', $slug)
+            ->select('courses.id', 'courses.title', 'courses.description', 'categories.name AS category_name', 'courses.banner', 'courses.slug', 'courses.created_at', 'courses.updated_at', 'users.name')
+            ->first();
+        $video = Video::where('course_id', $course->id)->get();
+        return view('instructor.course', compact('course', 'video'));
     }
 
 
@@ -86,7 +95,6 @@ class InstructorController extends Controller
             return redirect()->route('dashboard');
         } else {
             $category  = Category::all();
-            $language  = Language::all();
             return view('instructor.apply-form', compact('category', 'language'));
         }
     }
@@ -125,24 +133,11 @@ class InstructorController extends Controller
 
             $course  = Course::where('slug', $slug)->first();
             $category  = Category::all();
-            $language  = Language::all();
-
-            return view('instructor.course-form', compact('category', 'language', 'course'));
+            return view('instructor.course-form', compact('category', 'course'));
         }
     }
 
 
-    public function course($slug)
-    {
-        $course = Course::join('users', 'courses.user_id', '=', 'users.id')
-            ->join('categories', 'courses.category_id', '=', 'categories.id')
-            ->join('languages', 'courses.language_id', '=', 'languages.id')
-            ->where('courses.slug', $slug)
-            ->select('courses.id', 'courses.title', 'courses.description', 'categories.name AS category_name', 'languages.name AS language_name', 'courses.banner', 'courses.slug', 'courses.created_at', 'courses.updated_at', 'users.name')
-            ->first();
-        $video = Video::where('course_id', $course->id)->get();
-        return view('instructor.course', compact('course', 'video'));
-    }
 
     public function destroy($slug)
     {

@@ -71,6 +71,13 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
+
+    public function enrollment()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+
     public function delete()
     {
         // Delete associated lessons

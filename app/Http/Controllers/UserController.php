@@ -3,30 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $courses =  Course::join('users', 'courses.user_id', '=', 'users.id')
-        ->join('categories', 'courses.category_id', '=', 'categories.id')
-        ->join('languages', 'courses.language_id', '=', 'languages.id')
-        ->select('courses.title', 'courses.description', 'categories.name', 'languages.name AS language_name', 'courses.banner', 'courses.slug')
-        ->get();
-        return view('home.index',compact('courses'));
+            ->get();
+        return view('home.index', compact('courses'));
     }
 
-    public function course_detail($slug){
-        $course = Course::join('users', 'courses.user_id', '=', 'users.id')
-            ->join('categories', 'courses.category_id', '=', 'categories.id')
-            ->join('languages', 'courses.language_id', '=', 'languages.id')
+    public function course_detail($slug)
+    {
+        $course = Course::with('user', 'category')
             ->where('courses.slug', $slug)
-            ->select('courses.id', 'courses.title', 'courses.description', 'categories.name AS category_name', 'languages.name AS language_name', 'courses.banner', 'courses.slug', 'courses.created_at', 'courses.updated_at', 'users.name')
             ->first();
         $video = Video::where('course_id', $course->id)->get();
-        return view('home.course-detail', compact('course', 'video'));
-        
+        return view('home.course-detail', compact('course','video'));
     }
-    
+
+    public function enroll($id){
+        Enrollment::create([
+            'user_id' => Auth::id(),
+            'course_id' => $id,
+        ]);
+        return redirect()->back();
+    }
 }

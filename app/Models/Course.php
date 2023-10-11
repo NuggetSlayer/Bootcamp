@@ -9,11 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasUuids;
+
     use HasFactory;
+    protected $casts = [
+        'language' => 'json',
+    ];
+
     protected $fillable = [
         'user_id',
         'category_id',
-        'language_id',
+        'language',
         'title',
         'description',
         'banner',
@@ -25,6 +30,19 @@ class Course extends Model
         return $this->hasMany(Video::class);
     }
 
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function enrollment()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function delete()
     {

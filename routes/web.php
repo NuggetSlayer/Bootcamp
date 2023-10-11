@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::match(['get','post'], '/video-form/{id}', [InstructorController::class, 'store_vid'])->name('video-form');
     Route::match(['get','put'], '/edit-video-form/{slug}', [InstructorController::class, 'edit_vid'])->name('edit-video-form');
     Route::get('/delete-video/{slug}', [InstructorController::class, 'destroy_vid'])->name('delete-video');
+    Route::get('/enroll/{id}', [UserController::class, 'enroll'])->name('enroll'); 
 
 });
 

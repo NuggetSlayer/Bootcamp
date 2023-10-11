@@ -16,4 +16,9 @@ class Video extends Model
         'slug',
         'url',
     ];
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
 }

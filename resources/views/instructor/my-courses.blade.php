@@ -9,10 +9,11 @@
                         <div class="dashboardarea__left">
                             <div class="dashboardarea__left__img">
                                 <div x-data="{ photoName: null, photoPreview: null }" class="col-span-6 sm:col-span-4" bis_skin_checked="1">
-                                    
+
                                     <div class="mt-2" x-show="! photoPreview" bis_skin_checked="1">
-                                        <img src="https://ui-avatars.com/api/?name=A&amp;color=7F9CF5&amp;background=EBF4FF"
-                                            alt="Abii" class="object-cover">
+                                        <img class="rounded-full object-cover" src="{{ Auth::user()->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}"
+                                            alt="{{ Auth::user()->name }}" />
+
                                     </div>
 
                                 </div>
@@ -220,7 +221,17 @@
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                                     <div class="gridarea__wraper">
                                         <div class="gridarea__img">
-                                            <img src="{{ asset('storage/' . $item->banner) }}" alt="grid">
+                                        </div>
+                                        <div class="gridarea__img">
+                                            <a href="">
+                                                <img src="{{ asset('storage/' . $item->banner) }}" alt="grid">
+                                            </a>
+                                            <div class="gridarea__small__button">
+                                                @foreach (json_decode($item->language) as $language)
+                                                    <div class="grid__badge"> {{ $language->value }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                         <div class="gridarea__content">
                                             <div class="gridarea__heading">
@@ -235,12 +246,16 @@
                                                 <div class="gridarea__list">
                                                     <ul>
                                                         <li>
-                                                            <div class="grid__badge pink__color">
-                                                                {{ $item->language_name }}
+                                                            <div class="gridarea__small__img">
+                                                                <img src="{{ $item->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}" alt="grid">
+                                                                <div class="gridarea__small__content">
+                                                                    <h6>{{ $item->name }}</h6>
+                                                                </div>
                                                             </div>
                                                         </li>
                                                         <li>
-                                                            <div class="grid__badge blue__color">{{ $item->name }}</div>
+                                                            <div class="grid__badge blue__color">
+                                                                {{ $item->category->name }}</div>
                                                         </li>
                                                     </ul>
                                                 </div>

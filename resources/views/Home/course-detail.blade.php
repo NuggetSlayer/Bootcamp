@@ -47,25 +47,17 @@
                     <div class="blogarae__img__2 course__details__img__2" data-aos="fade-up">
                         <img src="{{ asset('storage/' . $course->banner) }}" alt="blog">
 
-                        <!-- <div class="registerarea__content course__details__video">
-                                            <div class="registerarea__video">
-                                                <div class="video__pop__btn">
-                                                    <a class="video-btn" href="https://www.youtube.com/watch?v=vHdclsdkp28"> <img src="{{ asset('assets/img/icon/video.png') }}" alt=""></a>
-                                                </div>
-
-
-                                            </div>
-                                        </div> -->
                     </div>
 
                     <div class="blog__details__content__wraper">
                         <div class="course__button__wraper" data-aos="fade-up">
                             <div class="course__button">
-                                <a href="#">Featured</a>
-                                <a class="course__2" href="#">Ux Design</a>
+                                @foreach (json_decode($course->language) as $language)
+                                    <a class="course__2" href="#">{{ $language->value }}</a>
+                                @endforeach
                             </div>
                             <div class="course__date">
-                                <p>Last Update:<span> {{ $course->updated_at->format('D, d M Y') }}</span></p>
+                                <p>Category:<span> {{ $course->category->name }}</span></p>
                             </div>
                         </div>
                         <div class="course__details__heading" data-aos="fade-up">
@@ -101,7 +93,7 @@
                                                         <div class="scc__wrap">
                                                             <div class="scc__info">
                                                                 <i class="icofont-video-alt"></i>
-                                                                <h5>
+                                                                <h5 class="flex align-middle text-center items-center gap-1 justify-center">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="2"
@@ -114,7 +106,7 @@
                                                                             points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02">
                                                                         </polygon>
                                                                     </svg>
-                                                                    <span>Video :</span>{{ $item->title }}
+                                                                    <span>Video : {!! Str::limit(strip_tags($item->title), $limit = 40, $end = '...') !!}</span>
                                                                 </h5>
                                                             </div>
                                                             <div class="scc__meta">
@@ -127,7 +119,7 @@
 
                                                     @empty
                                                         <div class="no-data text-white text-center">
-                                                            No Data
+                                                            No Video Available
                                                         </div>
                                                     @endforelse
 
@@ -154,31 +146,30 @@
 
 
                 <div class="col-xl-4 col-lg-4">
-
                     <div class="course__details__sidebar">
                         <div class="event__sidebar__wraper" data-aos="fade-up">
 
-
                             <div class="blogarae__img__2 course__details__img__2" data-aos="fade-up">
-                                <img src="{{ asset('assets/img/blog/blog_7.png') }}" alt="blog">
+                                <div class="dashboardarea__left__img">
+                                    <div x-data="{ photoName: null, photoPreview: null }" class="col-span-6 sm:col-span-4" bis_skin_checked="1">
 
-                                <div class="registerarea__content course__details__video">
-                                    <div class="registerarea__video">
-                                        <div class="video__pop__btn">
-                                            <a class="video-btn" href="https://www.youtube.com/watch?v=vHdclsdkp28"> <img
-                                                    src="{{ asset('assets/img/icon/video.png') }}" alt=""></a>
+                                        <div class="mt-2" x-show="! photoPreview" bis_skin_checked="1">
+                                            <img class="rounded-full object-cover"
+                                                src="{{ Auth::user()->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}"
+                                                alt="{{ Auth::user()->name }}" />
                                         </div>
-
 
                                     </div>
                                 </div>
                             </div>
 
-
-
                             <div class="course__summery__button">
-                                <a class="default__button" href="#">Add To Cart</a>
-                                <a class="default__button default__button--2" href="#">Buy Now</a>
+                                @if ($video->isNotEmpty())
+                                    <a class="default__button "
+                                        href="{{ route('video', ['slug' => $video->first()->slug]) }}">Watch Course</a>
+                                @endif
+                                <a class="default__button default__button--2"
+                                        href="{{ route('enroll' , ['id' => $course->id]) }}">Enroll</a>
                             </div>
 
                             <div class="course__summery__lists">
@@ -186,57 +177,28 @@
                                     <li>
                                         <div class="course__summery__item">
                                             <span class="sb_label">Instructor:</span><span class="sb_content"><a
-                                                    href="instructor-details.html">D. Willaim</a></span>
+                                                    href="instructor-details.html">{{ $course->user->name }} </a></span>
                                         </div>
                                     </li>
 
                                     <li>
                                         <div class="course__summery__item">
-                                            <span class="sb_label">Start Date</span><span class="sb_content">05 Dec
-                                                2024</span>
+                                            <span class="sb_label">Total Video:</span><span
+                                                class="sb_content">{{ $video->count() }}</span>
                                         </div>
                                     </li>
 
                                     <li>
                                         <div class="course__summery__item">
-                                            <span class="sb_label">Total Duration</span><span class="sb_content">08Hrs
-                                                32Min</span>
+                                            <span class="sb_label">Posted At:</span><span
+                                                class="sb_content">{{ $course->created_at->format('D, d M Y') }}</span>
                                         </div>
                                     </li>
 
                                     <li>
                                         <div class="course__summery__item">
-                                            <span class="sb_label">Enrolled</span><span class="sb_content">100</span>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="course__summery__item">
-                                            <span class="sb_label">Lectures</span><span class="sb_content">30</span>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="course__summery__item">
-                                            <span class="sb_label">Skill Level</span><span class="sb_content">Basic</span>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="course__summery__item">
-                                            <span class="sb_label">Language</span><span class="sb_content">Spanish</span>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="course__summery__item">
-                                            <span class="sb_label">Quiz</span><span class="sb_content">Yes</span>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="course__summery__item">
-                                            <span class="sb_label">Certificate</span><span class="sb_content">Yes</span>
+                                            <span class="sb_label">Last Updated At:</span><span
+                                                class="sb_content">{{ $course->updated_at->format('D, d M Y') }}</span>
                                         </div>
                                     </li>
 
@@ -270,6 +232,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
