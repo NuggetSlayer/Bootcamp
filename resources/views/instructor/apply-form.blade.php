@@ -10,9 +10,9 @@
             <ul>
                 <li>
                     <a href="{{ route('dashboard') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-monitor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-monitor">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2">
                             </rect>
                             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -21,14 +21,13 @@
                         My Courses</a>
                 </li>
                 <li>
-                    <a href="instructor-announcments.html">
+                    <a href="student-enrolled-courses.html">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-volume-1">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            stroke-linejoin="round" class="feather feather-bookmark">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        Announcments</a>
+                        Enrolled Courses</a>
                 </li>
                 <li>
                     <a href="instructor-quiz-attempts.html">
@@ -91,13 +90,10 @@
     </div>
 @endsection
 
+
 @section('content')
     <div class="col-xl-9 col-lg-9 col-md-12">
-        <form action="" method="post">
-            @if (Route::is('edit-video-form'))
-                @method('PUT')
-            @endif
-
+        <form action="" method="post" enctype="multipart/form-data">
             @csrf
             <div class="accordion-item">
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -106,14 +102,27 @@
                         <div class="become__instructor__form">
                             <div class="row">
 
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-4">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="title">Video Title </label>
-                                            <input type="text" class="@error('title') is-invalid @enderror"
-                                                placeholder="Video Title" name="title"
-                                                value="{{ Route::is('edit-video-form') ? old('title') ?? $video->title : old('title') }}">
-                                            @error('title')
+                                            <label for="name">Full Name </label>
+                                            <input type="text" class="@error('name') is-invalid @enderror"
+                                                placeholder="Name" name="name" value="{{ old('name') }}">
+                                            @error('name')
+                                                <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
+                                    <div class="dashboard__form__wraper">
+                                        <div class="dashboard__form__input">
+                                            <label for="expertise">Expertise </label>
+                                            <input type="text" class="@error('expertise') is-invalid @enderror"
+                                                placeholder="expertise" name="expertise" value="{{ old('expertise') }}">
+                                            @error('expertise')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -123,12 +132,25 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-5">
                                     <div class="dashboard__form__wraper">
                                         <div class="dashboard__form__input">
-                                            <label for="url">Video URL</label>
-                                            <input type="text" class="@error('url') is-invalid @enderror"
-                                                placeholder="Video URL" name="url"
-                                                value="{{ Route::is('edit-video-form') ? old('url') ?? $video->url : old('url') }}">
-                                            @error('url')
+                                            <label for="profile">Profile Image</label>
+                                            <input type="file" class="@error('profile') is-invalid @enderror"
+                                                name="profile">
+                                            @error('profile')
                                                 <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-2">
+                                    <div class="dashboard__form__wraper">
+                                        <div class="dashboard__form__input">
+                                            <label for="biography">Biography</label>
+                                            <textarea id="" cols="30" rows="10" class="@error('biography') is-invalid @enderror"
+                                                name="biography">{{ old('biography') }}</textarea>
+                                            @error('biography')
+                                                <small
+                                                    class="invalid-feedback mt-2 mb-2 ms-1 block">{{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -136,11 +158,7 @@
 
                                 <div class="col-xl-4 col-lg-8 col-md-6 col-12">
                                     <div class="create__course__bottom__button">
-                                        @if (Route::is('edit-video-form'))
-                                            <button type="submit" href="#">Update Video</button>
-                                        @else
-                                            <button type="submit" href="#">Add Video</button>
-                                        @endif
+                                        <button type="submit" href="#">Send</button>
                                     </div>
                                 </div>
 

@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Language extends Model
+class Applicant extends Model
 {
     use HasFactory;
     use HasUuids;
 
     protected $fillable = [
-        'name'
+        'user_id',
+        'name',
+        'profile',
+        'expertise',
+        'biography',
     ];
 }

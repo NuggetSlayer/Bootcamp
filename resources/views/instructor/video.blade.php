@@ -1,4 +1,4 @@
-@extends('layouts.instructor')
+@extends('layouts.main')
 
 
 
@@ -21,7 +21,7 @@
                                         {{ $key + 1 }} </a></h5>
 
                             </div>
-                            <div class="scc__meta">
+                            <div class="scc__peta">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-youtube">
@@ -31,8 +31,7 @@
                                     <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02">
                                     </polygon>
                                 </svg>
-                                <a href="{{ route('video', ['slug' => $item->slug]) }}"><span class="question"><i
-                                            class="icofont-eye"></i> Watch</span></a>
+                                <a href="{{ route('video', ['slug' => $item->slug]) }}"><span class="question">Watch</span></a>
                             </div>
                         </div>
                     @endforeach
@@ -55,4 +54,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

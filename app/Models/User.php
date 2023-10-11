@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasUuids;
@@ -31,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -62,4 +64,35 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+
+    public function enrollment()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+
+    public function delete()
+    {
+        // Delete associated lessons
+        $this->courses()->delete();
+
+        return parent::delete();
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    public function isInstructor()
+    {
+        return $this->hasRole('Instructor');
+    }
 }

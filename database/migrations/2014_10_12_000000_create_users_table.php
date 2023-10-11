@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['User', 'Instructor'])->default('User');
+            $table->enum('role', ['User', 'Instructor', 'Admin'])->default('User');
             $table->boolean('verified')->default(false);
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
@@ -34,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
