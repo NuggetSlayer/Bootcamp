@@ -506,7 +506,7 @@
                                                 <div class="gridarea__small__img">
                                                     <img src="{{ $item->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}" alt="grid">
                                                     <div class="gridarea__small__content">
-                                                        <h6>{{ $item->name }}</h6>
+                                                        <h6>{{ $item->user->name }}</h6>
                                                     </div>
                                                 </div>
                                             </li>

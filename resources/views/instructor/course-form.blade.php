@@ -200,7 +200,7 @@
                                                 <label for="language">Course language </label>
                                                 <input name="language" placeholder="Insert Language"
                                                     class="@error('language') is-invalid @enderror"
-                                                    data-whitelist="PHP, CSS, HTML" data-max-tags="3"
+                                                    data-whitelist="PHP, CSS, HTML, Laravel, Python, Ruby"
                                                     value="{{ Route::is('edit-course-form') ? old('language') ?? $course->language : old('language') }}">
                                                 @error('language')
                                                     <small

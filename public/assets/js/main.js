@@ -729,14 +729,31 @@ function pieChart() {
 lineChart()
 pieChart()
 
-var input = document.querySelector('input[name="language"]'),
-  tagify = new Tagify(input, {
-    whitelist: ['PHP', 'CSS', 'HTML'],
-    dropdown: {
-      classname: "color-blue",
-      enabled: 0,              // show the dropdown immediately on focus
-      maxItems: 3,
-      position: "text",         // place the dropdown near the typed text
-      closeOnSelect: false,          // keep the dropdown open after selecting a suggestion
+var input = document.querySelector('input[name="language"]');
+var tagify = new Tagify(input, {
+  whitelist: ['PHP', 'CSS', 'HTML', 'Laravel', 'Python', 'Ruby', 'Java', 'Javascript'],
+  editTags: false,
+  maxTags: 3,
+  dropdown: {
+    classname: "color-blue",
+    enabled: 0,
+    maxItems: 10,  // Limit the total number of items (tags + suggestions) to 3
+    position: "text",
+    closeOnSelect: true,
+  }
+});
+
+$(function () {
+
+  $('#passwordCheck').on('click', function () {
+    let passInput = $("#password");
+
+    if (passInput.attr('type') == 'password') {
+
+      passInput.attr('type', 'text');
+
+    } else {
+      passInput.attr('type', 'password');
     }
   });
+});

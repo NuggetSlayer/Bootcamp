@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 
-class CheckInstructor
+class checkAdmin
 {
     /**
      * Handle an incoming request.
@@ -18,11 +18,11 @@ class CheckInstructor
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->isInstructor()) {
+        if (Auth::check() && Auth::user()->isAdmin()) {
             return $next($request);
         }
 
         // Redirect or handle unauthorized access for regular users
-        return redirect()->route('home')->with('error', 'Only Authorized Instructor Are Allowed');
+        return redirect()->route('home')->with('error', 'Only Authorized Admins Are Allowed');
     }
 }

@@ -10,9 +10,9 @@
             <ul>
                 <li>
                     <a href="{{ route('dashboard') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-monitor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-monitor">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2">
                             </rect>
                             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -21,33 +21,13 @@
                         My Courses</a>
                 </li>
                 <li>
-                    <a href="student-enrolled-courses.html">
+                    <a href="{{ route('enrolled-courses') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-bookmark">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                         Enrolled Courses</a>
-                </li>
-                <li>
-                    <a href="instructor-quiz-attempts.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-message-square">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
-                            </path>
-                        </svg>
-                        Quiz Attempt</a>
-                </li>
-                <li>
-                    <a href="instructor-assignments.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-volume-1">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                        </svg>
-                        Assignments</a>
                 </li>
             </ul>
         </div>
@@ -113,7 +93,12 @@
                         Course level : <span>{{ $course->category_name }}</span>
                     </li>
                     <li>
-                        Language : <span>{{ $course->language_name }}</span>
+                        Language : <span>
+                            @foreach (json_decode($course->language) as $language)
+                                <div class="grid__badge text-white"> {{ $language->value }}
+                                </div>
+                            @endforeach
+                        </span>
                     </li>
                     <li>
                         Instructor : <span>{{ $course->name }}</span>
@@ -166,10 +151,11 @@
                                                         <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02">
                                                         </polygon>
                                                     </svg>
-                                                    <h5><span> Video :</span>{!! Str::limit(strip_tags($item->title), $limit = 60, $end = '...') !!}</h5>
+                                                    <h5><span> Video : </span>{!! Str::limit(strip_tags($item->title), $limit = 60, $end = '...') !!}</h5>
                                                 </div>
                                                 <div class="scc__meta">
-                                                    <a href="{{ route('delete-video', ['slug' => $item->slug]) }}">
+                                                    <a onclick="confirmDelete('{{ $item->slug }}','Video')"
+                                                        href="javascript:void(0);">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -213,46 +199,46 @@
                                             </div>
                                         @empty
                                             <div class="no-data text-white text-center">
-                                                No Data
+                                                No Video Available
                                             </div>
                                         @endforelse
                                         <div class="scc__wrap">
-                                                <div class="dashboardarea__right">
-                                                    <div class="dashboardarea__right__button">
-                                                        <a class="default__button flex align-middle gap-1"
-                                                            href="{{ route('video-form', ['id' => $course->id]) }}">
-                                                            Add Video
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                                height="18" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" class="feather feather-film">
-                                                                <rect x="2" y="2" width="20"
-                                                                    height="20" rx="2.18" ry="2.18"></rect>
-                                                                <line x1="7" y1="2" x2="7"
-                                                                    y2="22">
-                                                                </line>
-                                                                <line x1="17" y1="2" x2="17"
-                                                                    y2="22">
-                                                                </line>
-                                                                <line x1="2" y1="12" x2="22"
-                                                                    y2="12">
-                                                                </line>
-                                                                <line x1="2" y1="7" x2="7"
-                                                                    y2="7">
-                                                                </line>
-                                                                <line x1="2" y1="17" x2="7"
-                                                                    y2="17">
-                                                                </line>
-                                                                <line x1="17" y1="17" x2="22"
-                                                                    y2="17">
-                                                                </line>
-                                                                <line x1="17" y1="7" x2="22"
-                                                                    y2="7">
-                                                                </line>
-                                                            </svg>
-                                                        </a>
-                                                    </div>
+                                            <div class="dashboardarea__right">
+                                                <div class="dashboardarea__right__button">
+                                                    <a class="default__button flex align-middle gap-1"
+                                                        href="{{ route('video-form', ['id' => $course->id]) }}">
+                                                        Add Video
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                                            height="18" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" class="feather feather-film">
+                                                            <rect x="2" y="2" width="20" height="20"
+                                                                rx="2.18" ry="2.18"></rect>
+                                                            <line x1="7" y1="2" x2="7"
+                                                                y2="22">
+                                                            </line>
+                                                            <line x1="17" y1="2" x2="17"
+                                                                y2="22">
+                                                            </line>
+                                                            <line x1="2" y1="12" x2="22"
+                                                                y2="12">
+                                                            </line>
+                                                            <line x1="2" y1="7" x2="7"
+                                                                y2="7">
+                                                            </line>
+                                                            <line x1="2" y1="17" x2="7"
+                                                                y2="17">
+                                                            </line>
+                                                            <line x1="17" y1="17" x2="22"
+                                                                y2="17">
+                                                            </line>
+                                                            <line x1="17" y1="7" x2="22"
+                                                                y2="7">
+                                                            </line>
+                                                        </svg>
+                                                    </a>
                                                 </div>
+                                            </div>
                                             <div class="scc__meta">
                                                 <span>
                                                     <h1>{{ $video->count() }} Video</h1>
@@ -292,7 +278,9 @@
                             <div class="dashboardarea__right">
                                 <div class="dashboardarea__right__button">
                                     <a class="default__button delete__button flex align-middle gap-1"
-                                        href="{{ route('delete-course', ['slug' => $course->slug]) }}">Delete Course
+                                        onclick="confirmDelete('{{ $course->slug }}','Course')"
+                                        href="javascript:void(0);">Delete
+                                        Course
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">

@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/plugins_plyr.css ') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css ') }}">
-   
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css ') }}">
 
     @vite('resources/css/app.css')
 
@@ -40,12 +40,12 @@
 
 <body class="body__wrapper">
     <!-- pre loader area start -->
-    <div id="back__preloader">
+    {{-- <div id="back__preloader">
         <div id="back__circle_loader"></div>
         <div class="back__loader_logo">
             <img src="{{ asset('assets/img/pre.png') }}" alt="Preload">
         </div>
-    </div>
+    </div> --}}
     <!-- pre loader area end -->
 
     <!-- Dark/Light area start -->
@@ -62,8 +62,8 @@
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
                     stroke-width="32"
                     d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94" />
-                <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor"
-                    stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" />
+                <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-miterlimit="10" stroke-width="32" />
             </svg>
 
             <span class="light__mode">Light</span>
@@ -140,18 +140,13 @@
                                                 class="icofont-rounded-down"></i> </a>
                                     </li>
                                     <li class="mega__menu position-static">
-                                        <a class="headerarea__has__dropdown" href="about.html">Pages<i
+                                        <a class="headerarea__has__dropdown" href="{{ route('courses') }}">Courses<i
                                                 class="icofont-rounded-down"></i> </a>
                                     </li>
                                     <li class="mega__menu position-static">
-                                        <a class="headerarea__has__dropdown" href="course.html">Courses<i
+                                        <a class="headerarea__has__dropdown"
+                                            href="{{ route('instructors') }}">Instructors<i
                                                 class="icofont-rounded-down"></i> </a>
-                                    </li>
-                                    <li><a class="headerarea__has__dropdown"
-                                            href="dashboard/instructor-dashboard.html">Dashboard
-                                            <i class="icofont-rounded-down"></i>
-                                        </a>
-
                                     </li>
                                 </ul>
                             </nav>
@@ -166,8 +161,7 @@
                                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                                     @else
                                         <a href="{{ route('login') }}"
-                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                                            in</a>
+                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Login</a>
 
                                         @if (Route::has('register'))
                                             <a href="{{ route('register') }}"
@@ -560,7 +554,6 @@
     <!-- footer__section__end -->
 
     <!-- JS here -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -581,6 +574,40 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="{{ asset('assets/js/plugin_plyr.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+    <!-- Show SweetAlert -->
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'bottom',
+                title: '{{ session('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+            });
+        @endif
+    </script>
+    <script>
+        function confirmDelete(Slug, Type) {
+            Swal.fire({
+                title: 'Delete ' + Type,
+                text: 'Are You Sure You Want To Delete This ' + Type + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it',
+                cancelButtonText: 'No, cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "{{ url('/delete-:type/') }}/" + Slug;
+                    url = url.replace(':type', Type);
+                    window.location.href = url;
+                }
+            });
+        }
+    </script>
 
     <script>
         // On page load or when changing themes, best to add inline in `head` to avoid FOUC

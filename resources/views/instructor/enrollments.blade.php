@@ -190,36 +190,37 @@
     <div class="col-xl-9 col-lg-9 col-md-12">
         <div class="dashboard__content__wraper">
             <div class="dashboard__section__title">
-                <h4>Courses</h4>
+                <h4>Enrolled Courses</h4>
             </div>
             <div class="row">
                 <div class="tab-content tab__content__wrapper aos-init aos-animate">
                     <div class="tab-pane fade active show" id="projects__one" role="tabpanel"
                         aria-labelledby="projects__one">
                         <div class="row flex-wrap">
-                            @forelse ($course as $item)
+                            @forelse ($enrolled as $item)
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                                     <div class="gridarea__wraper">
                                         <div class="gridarea__img">
                                         </div>
                                         <div class="gridarea__img">
                                             <a href="">
-                                                <img src="{{ asset('storage/' . $item->banner) }}" alt="grid">
+                                                <img src="{{ asset('storage/' . $item->course->banner) }}" alt="grid">
                                             </a>
                                             <div class="gridarea__small__button">
-                                                @foreach (json_decode($item->language) as $language)
-                                                    <div class="grid__badge">{{ $language->value }}</div>
+                                                @foreach (json_decode($item->course->language) as $language)
+                                                    <div class="grid__badge"> {{ $language->value }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
                                         <div class="gridarea__content">
                                             <div class="gridarea__heading">
                                                 <h3><a
-                                                        href="{{ route('course', ['slug' => $item->slug]) }}">{!! Str::limit(strip_tags($item->title), $limit = 40, $end = '...') !!}</a>
+                                                        href="{{ route('course-detail', ['slug' => $item->course->slug]) }}">{!! Str::limit(strip_tags($item->course->title), $limit = 40, $end = '...') !!}</a>
                                                 </h3>
                                             </div>
                                             <div class="gridarea__price">
-                                                <p>{!! Str::limit(strip_tags($item->description), $limit = 60, $end = '...') !!}</p>
+                                                <p>{!! Str::limit(strip_tags($item->course->description), $limit = 60, $end = '...') !!}</p>
                                             </div>
                                             <div class="gridarea__bottom">
                                                 <div class="gridarea__list">
@@ -228,13 +229,13 @@
                                                             <div class="gridarea__small__img">
                                                                 <img src="{{ $item->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}" alt="grid">
                                                                 <div class="gridarea__small__content">
-                                                                    <h6>{{ $item->name }}</h6>
+                                                                    <h6>{{ $item->course->user->name }}</h6>
                                                                 </div>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="grid__badge blue__color">
-                                                                {{ $item->category->name }}</div>
+                                                                {{ $item->course->category->name }}</div>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -262,7 +263,7 @@
                                     </div>
                                 @else
                                     <div class="no-data text-center">
-                                        Course Empty
+                                        You Have Not Enrolled To Any Course
                                     </div>
                                 @endif
                             @endforelse

@@ -80,19 +80,31 @@ class User extends Authenticatable
 
     public function delete()
     {
-        // Delete associated lessons
         $this->courses()->delete();
-
+        $this->enrollment()->delete();
         return parent::delete();
     }
+
 
     public function hasRole($role)
     {
         return $this->role === $role;
     }
 
+
+    public function isEnrolled($courseId)
+    {
+        return $this->enrollment()->where('course_id', $courseId)->exists();
+    }
+
+
     public function isInstructor()
     {
         return $this->hasRole('Instructor');
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('Admin');
     }
 }

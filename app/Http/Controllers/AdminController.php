@@ -26,17 +26,15 @@ class AdminController extends Controller
         $applicant = Applicant::where('user_id', $id)->first();
         $applicant->delete();
 
-        return redirect()->route('applicants');
+        return redirect()->route('applicants')->with('success', 'Applicant Verified Successfuly');
     }
 
     public function reject($id){
+
         $applicant = Applicant::where('user_id', $id)->first();
         $applicant->delete();
         
-        redirect()->route('applicants');
+        return redirect()->route('applicants')->with('success', 'Applicant Rejected Successfuly');
     }
 
-    public function register() {
-        return view('admin.register');
-    }
 }

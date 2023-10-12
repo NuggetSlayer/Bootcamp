@@ -47,7 +47,7 @@
                 
             <div class="lesson__content__wrap">
                 <h3>{{ $video->title }}</h3>
-                <span><a href="course-details.html">Close</a></span>
+                <span><a href="{{ url()->previous() }}">Close</a></span>
             </div>
             <div class="plyr__video-embed rbtplayer w-full">
                 <iframe src="{{ $video->url }}" allowfullscreen allow="autoplay"></iframe>
