@@ -9,11 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasUuids;
-
     use HasFactory;
-    protected $casts = [
-        'language' => 'json',
-    ];
 
     protected $fillable = [
         'user_id',
@@ -38,7 +34,7 @@ class Course extends Model
     {
         return $this->hasMany(Enrollment::class);
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -48,6 +44,7 @@ class Course extends Model
     {
         // Delete associated lessons
         $this->videos()->delete();
+        $this->enrollment()->delete();
 
         return parent::delete();
     }

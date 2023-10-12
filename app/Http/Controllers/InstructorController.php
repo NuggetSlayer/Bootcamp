@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,7 @@ class InstructorController extends Controller
             ->get();
         return view('instructor.my-courses', compact('course'));
     }
+
 
     public function store(Request $request)
     {
@@ -50,7 +52,7 @@ class InstructorController extends Controller
             $course->slug = Str::slug($request->title) . '-' . substr($course->id, 0, 10);;
             $course->save();
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Course Created Successfuly');
         } else {
             $category  = Category::all();
             return view('instructor.course-form', compact('category'));
@@ -63,7 +65,7 @@ class InstructorController extends Controller
         $course = Course::join('users', 'courses.user_id', '=', 'users.id')
             ->join('categories', 'courses.category_id', '=', 'categories.id')
             ->where('courses.slug', $slug)
-            ->select('courses.id', 'courses.title', 'courses.description', 'categories.name AS category_name', 'courses.banner', 'courses.slug', 'courses.created_at', 'courses.updated_at', 'users.name')
+            ->select('courses.id', 'courses.title', 'courses.description', 'categories.name AS category_name', 'courses.banner', 'courses.slug' , 'courses.language', 'courses.created_at', 'courses.updated_at', 'users.name')
             ->first();
         $video = Video::where('course_id', $course->id)->get();
         return view('instructor.course', compact('course', 'video'));
@@ -92,12 +94,13 @@ class InstructorController extends Controller
             // $course->slug = Str::slug($request->title) . '-' . substr($course->id, 0, 10);;
             // $course->save();
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Applied Successfuly');
         } else {
             $category  = Category::all();
-            return view('instructor.apply-form', compact('category', 'language'));
+            return view('instructor.apply-form', compact('category',));
         }
     }
+
 
     public function edit(Request $request, $slug)
     {
@@ -118,7 +121,7 @@ class InstructorController extends Controller
 
             Course::where('slug', $slug)->update([
                 'category_id' => $request->category,
-                'language_id' => $request->language,
+                'language' => $request->language,
                 'title' => $request->title,
                 'description' => $request->description,
                 'banner' => $course->banner,
@@ -128,7 +131,7 @@ class InstructorController extends Controller
             $course->slug = Str::slug($request->title) . '-' . substr($course->id, 0, 10);;
             $course->save();
 
-            return redirect(route('course', ['slug' => $course->slug]));
+            return redirect(route('course', ['slug' => $course->slug]))->with('success', 'Course Updated Successfuly');
         } else {
 
             $course  = Course::where('slug', $slug)->first();
@@ -138,7 +141,6 @@ class InstructorController extends Controller
     }
 
 
-
     public function destroy($slug)
     {
         $course = Course::where('slug', $slug)->first();
@@ -146,8 +148,9 @@ class InstructorController extends Controller
             Storage::delete($course->image);
         }
         $course->delete();
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Course Deleted Successfuly');;
     }
+
 
     // VIDEO
     public function store_vid(Request $request, $id)
@@ -169,11 +172,12 @@ class InstructorController extends Controller
             $video->save();
             $redirect = Course::where('id', $video->course_id)->first();
 
-            return redirect(route('course', ['slug' => $redirect->slug]));
+            return redirect(route('course', ['slug' => $redirect->slug]))->with('success', 'Video Created Successfuly');;
         } else {
             return view('instructor.video-form');
         }
     }
+
 
     public function video($slug)
     {
@@ -181,6 +185,7 @@ class InstructorController extends Controller
         $videos = Video::where('course_id', $video->course_id)->get();
         return view('instructor.video', compact('video', 'videos'));
     }
+
 
     public function edit_vid(Request $request, $slug)
     {
@@ -201,17 +206,27 @@ class InstructorController extends Controller
             $video->save();
             $redirect = Course::where('id', $video->course_id)->first();
 
-            return redirect(route('course', ['slug' => $redirect->slug]));
+            return redirect(route('course', ['slug' => $redirect->slug]))->with('success', 'Video Updated Successfuly');;
         } else {
             $video  = Video::where('slug', $slug)->first();
             return view('instructor.video-form', compact('video'));
         }
     }
 
+
     public function destroy_vid($slug)
     {
         $video = Video::where('slug', $slug)->first();
         $video->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Video Deleted Successfuly');;
+    }
+
+
+    public function enrolled_courses(){
+        $enrolled = Enrollment::with('user','course')
+        ->where('user_id', Auth::id())
+        ->get();
+
+        return view('instructor.enrollments', compact('enrolled'));
     }
 }

@@ -50,32 +50,51 @@
                                     @csrf
 
                                     <div>
-                                        <x-label for="email" class="text-white" value="{{ __('Email') }}" />
-                                        <x-input id="email" class="block mt-1 w-full text-black" type="email"
-                                            name="email" :value="old('email')" required autofocus autocomplete="username" />
+                                        <div class="dashboard__form__wraper">
+                                            <div class="dashboard__form__input">
+                                                <x-label for="email" class="text-white" value="{{ __('Email') }}" />
+                                                <x-input id="email"
+                                                    class="block mt-1 w-full text-white @error('email') @enderror"
+                                                    type="email" name="email" :value="old('email')" required
+                                                    autocomplete="username" />
+                                                @error('email')
+                                                    <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="mt-4">
-                                        <x-label for="password" class="text-white" value="{{ __('Password') }}" />
-                                        <x-input id="password" class="block mt-1 w-full text-black" type="password"
-                                            name="password" required autocomplete="current-password" />
+                                        <div class="dashboard__form__wraper">
+                                            <div class="dashboard__form__input">
+                                                <x-label for="password" class="text-white" value="{{ __('Password') }}" />
+                                                <x-input id="password"
+                                                    class="block mt-1 w-full text-white @error('password') @enderror"
+                                                    type="password" name="password" required autocomplete="current-password"
+                                                    :value="old('password')" />
+                                                @error('password')
+                                                    <small class="invalid-feedback mt-2 ms-1 block">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="block mt-4">
+                                    <div class="flex justify-between items-center mt-4">
                                         <label for="remember_me" class="flex items-center">
-                                            <x-checkbox id="remember_me" name="remember" />
-                                            <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                                            <x-checkbox id="passwordCheck" />
+                                            <span class="ml-2 text-sm text-gray-600">{{ __('See Password') }}</span>
                                         </label>
+                                        <div class="flex items-center justify-end mt-4">
+                                            @if (Route::has('password.request'))
+                                                <a class="underline text-sm text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    href="{{ route('password.request') }}">
+                                                    {{ __('Forgot your password?') }}
+                                                </a>
+                                            @endif
+                                        </div>
                                     </div>
 
-                                    <div class="flex items-center justify-end mt-4">
-                                        @if (Route::has('password.request'))
-                                            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                href="{{ route('password.request') }}">
-                                                {{ __('Forgot your password?') }}
-                                            </a>
-                                        @endif
-                                    </div>
+
                                     <div class="login__button">
                                         <button class="default__button">Log In</button>
                                     </div>

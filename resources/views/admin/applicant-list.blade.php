@@ -5,7 +5,7 @@
     <div class="col-xl-3 col-lg-3 col-md-12">
         <div class="dashboard__inner sticky-top">
             <div class="dashboard__nav__title">
-                <h6>Welcome, Micle Obema</h6>
+                <h6>Welcome, {{ Auth::user()->name }}</h6>
             </div>
             <div class="dashboard__nav">
                 <ul>
@@ -29,47 +29,7 @@
                             </svg>
                             Applicants</a>
                     </li>
-                    <li>
-                        <a href="admin-profile.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-user">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            My Profile</a>
-                    </li>
-                    <li>
-                        <a href="admin-message.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-bookmark">
-                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            Courses</a>
-                    </li>
-                    <li>
-                        <a href="admin-reviews.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-star">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                </polygon>
-                            </svg>
-                            Reviews</a>
-                    </li>
-                    <li>
-                        <a href="admin-quiz-attempts.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-help-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                            </svg>
-                            Quiz Attempts</a>
-                    </li>
+                   
                 </ul>
             </div>
 
@@ -150,7 +110,7 @@
                                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                             </svg>
                                         </a>
-                                        <a href="{{ route('applicant-hire',['id' => $item->user_id]) }}">
+                                        <a href="{{ route('applicant-reject', ['id' => $item->user_id]) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

@@ -6,6 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
+
                     <div class="breadcrumb__content__wraper" data-aos="fade-up">
                         <div class="breadcrumb__title">
                             <h2 class="heading">Course-Details</h2>
@@ -18,9 +19,8 @@
                         </div>
                     </div>
 
-
-
                 </div>
+
             </div>
         </div>
 
@@ -56,8 +56,8 @@
                                     <a class="course__2" href="#">{{ $language->value }}</a>
                                 @endforeach
                             </div>
-                            <div class="course__date">
-                                <p>Category:<span> {{ $course->category->name }}</span></p>
+                            <div class="course__button">
+                               <span> <div class="grid__badge blue__color">{{ $course->category->name }}</div></span>
                             </div>
                         </div>
                         <div class="course__details__heading" data-aos="fade-up">
@@ -93,7 +93,8 @@
                                                         <div class="scc__wrap">
                                                             <div class="scc__info">
                                                                 <i class="icofont-video-alt"></i>
-                                                                <h5 class="flex align-middle text-center items-center gap-1 justify-center">
+                                                                <h5
+                                                                    class="flex align-middle text-center items-center gap-1 justify-center">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="2"
@@ -155,8 +156,8 @@
 
                                         <div class="mt-2" x-show="! photoPreview" bis_skin_checked="1">
                                             <img class="rounded-full object-cover"
-                                                src="{{ Auth::user()->profile_photo_path ? asset('storage/' . $item->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}"
-                                                alt="{{ Auth::user()->name }}" />
+                                                src="{{ optional(Auth::user())->profile_photo_path ? asset('storage/' . optional(Auth::user())->profile_photo_path) : asset('assets/img/grid/grid_small_1.jpg') }}"
+                                                alt="{{ $course->user->name }}" />
                                         </div>
 
                                     </div>
@@ -168,8 +169,20 @@
                                     <a class="default__button "
                                         href="{{ route('video', ['slug' => $video->first()->slug]) }}">Watch Course</a>
                                 @endif
-                                <a class="default__button default__button--2"
-                                        href="{{ route('enroll' , ['id' => $course->id]) }}">Enroll</a>
+
+                                @auth
+                                    @if (Auth::user()->isEnrolled($course->id))
+                                        <a class="default__button default__button--2"
+                                            href="{{ route('quit', ['id' => $course->id]) }}">Quit</a>
+                                    @else
+                                        <a class="default__button"
+                                            href="{{ route('enroll', ['id' => $course->id]) }}">Enroll</a>
+                                    @endif
+                                @else
+                                    <a class="default__button default__button--2" href="{{ route('login') }}">Login to
+                                        Enroll</a>
+                                @endauth
+
                             </div>
 
                             <div class="course__summery__lists">

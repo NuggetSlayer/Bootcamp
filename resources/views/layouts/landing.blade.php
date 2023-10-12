@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icofont.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
@@ -37,14 +39,14 @@
 
 
 <body class="body__wrapper">
-    <!-- pre loader area start -->
+    {{-- <!-- pre loader area start -->
     <div id="back__preloader">
         <div id="back__circle_loader"></div>
         <div class="back__loader_logo">
             <img src="{{ asset('assets/img/pre.png') }}" alt="Preload">
         </div>
     </div>
-    <!-- pre loader area end -->
+    <!-- pre loader area end --> --}}
 
     <!-- Dark/Light area start -->
     <div class="mode_switcher my_switcher">
@@ -60,8 +62,8 @@
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
                     stroke-width="32"
                     d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94" />
-                <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor"
-                    stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" />
+                <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-miterlimit="10" stroke-width="32" />
             </svg>
 
             <span class="light__mode">Light</span>
@@ -138,15 +140,11 @@
                                                 class="icofont-rounded-down"></i> </a>
                                     </li>
                                     <li class="mega__menu position-static">
-                                        <a class="headerarea__has__dropdown" href="about.html">Pages<i
-                                                class="icofont-rounded-down"></i> </a>
-                                    </li>
-                                    <li class="mega__menu position-static">
-                                        <a class="headerarea__has__dropdown" href="course.html">Courses<i
+                                        <a class="headerarea__has__dropdown" href="{{ route('courses') }}">Courses<i
                                                 class="icofont-rounded-down"></i> </a>
                                     </li>
                                     <li><a class="headerarea__has__dropdown"
-                                            href="dashboard/instructor-dashboard.html">Dashboard
+                                            href="{{ route('instructors') }}">Instructors
                                             <i class="icofont-rounded-down"></i>
                                         </a>
 
@@ -164,8 +162,7 @@
                                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                                     @else
                                         <a href="{{ route('login') }}"
-                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                                            in</a>
+                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Login</a>
 
                                         @if (Route::has('register'))
                                             <a href="{{ route('register') }}"
@@ -716,7 +713,6 @@
 
 
     <!-- JS here -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -747,6 +743,35 @@
             document.getElementById("light--to-dark-button")?.classList.remove("dark--mode");
         }
     </script>
+
+    <!-- Show SweetAlert -->
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'bottom',
+                title: '{{ session('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+            });
+        @endif
+    </script>
+    <script>
+        @if (session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'bottom',
+                title: '{{ session('error') }}',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: false,
+            });
+        @endif
+    </script>
+
     @vite('resources/css/app.css')
 
     @livewireScripts
